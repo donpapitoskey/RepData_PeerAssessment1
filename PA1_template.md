@@ -171,3 +171,22 @@ barplot(steps.sum ~ as.Date(date),data=histoStrategy,xlab = "Date")
  
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+
+For the new plot, first we create a column with the weekdays and extract the weekend characteristic of the day.
+ 
+ 
+ 
+ ```r
+ library(lattice)
+ 
+ dfnew$weekday<-weekdays(as.Date(dfnew$date))
+ dfnew$weekday<-factor(dfnew$weekday,labels = c("weekday","weekday","weekday","weekday","weekday","weekend","weekend"),levels=unique(dfnew$weekday))
+ 
+ plotableDf<-aggregate(steps~interval+weekday,data = dfnew,mean)
+ xyplot(steps~interval|weekday,data = plotableDf,type="l",layout=c(1,2))
+ ```
+ 
+ ![](PA1_template_files/figure-html/weekdaysPlot-1.png)<!-- -->
+
+As presented, on weekend the activity is more spread and, in the mean, appears to have more activity. On other hand, the weekday presents the highest mean for steps.
